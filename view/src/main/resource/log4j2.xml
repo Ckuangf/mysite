@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+我们这里看到了配置文件里面是name很重要，没错，这个name可不能随便起（其实可以随便起）。这个机制意思很简单。就是类似于java package一样，比如我们的一个包：cn.lsw.base.log4j2。而且，可以发现我们前面生成Logger对象的时候，命名都是通过 Hello.class.getName(); 这样的方法，为什么要这样呢？ 很简单，因为有所谓的Logger 继承的问题。比如 如果你给cn.lsw.base定义了一个logger，那么他也适用于cn.lsw.base.lgo4j2这个logger。名称的继承是通过点（.）分隔的。然后你可以猜测上面loggers里面有一个子节点不是logger而是root，而且这个root没有name属性。这个root相当于根节点。你所有的logger都适用与这个logger，所以，即使你在很多类里面通过类名.class.getName() 得到很多的logger，而且没有在配置文件的loggers下面做配置，他们也都能够输出，因为他们都继承了root的log配置。
+
+我们上面的这个配置文件里面还定义了一个logger，他的名称是 cn.lsw.base.log4j2.Hello ，这个名称其实就是通过前面的Hello.class.getName(); 得到的，我们为了给他单独做配置，这里就生成对于这个类的logger，上面的配置基本的意思是只有cn.lsw.base.log4j2.Hello 这个logger输出trace信息，也就是他的日志级别是trace，其他的logger则继承root的日志配置，日志级别是error，只能打印出ERROR及以上级别的日志。如果这里logger 的name属性改成cn.lsw.base，则这个包下面的所有logger都会继承这个log配置（这里的包是log4j的logger name的“包”的含义，不是java的包，你非要给Hello生成一个名称为“myhello”的logger，他也就没法继承cn.lsw.base这个配置了。
+
+那有人就要问了，他不是也应该继承了root的配置了么，那么会不会输出两遍呢？我们在配置文件中给了解释，如果你设置了additivity="false"，就不会输出两遍。
+-->
+<!--
+        Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，你会看到log4j2内部各种详细输出。
+    -->
+<!--
+    monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数。
+-->
+<Configuration status="error" monitorInterval="30">
+    <properties>
+        <property name="LOG_HOME">./logs</property>
+        <property name="FILE_NAME">view-log</property>
+        <property name="log.sql.level">info</property>
+    </properties>
+
+    <!--先定义所有的appender-->
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" >
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="all" onMatch="ACCEPT" onMismatch="DENY"/>
+            <!--这个都知道是输出日志的格式-->
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %l - %msg%n" />
+        </Console>
+        <!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用-->
+       <!-- <File name="log" fileName="log/test.log" append="false">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>
+        </File>-->
+
+        <!-- 这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+        <RollingRandomAccessFile name="RollingRandomAccessFile" fileName="${LOG_HOME}/${FILE_NAME}.log" filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd HH-mm}-%i.log">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %l - %msg%n"/>
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20 -->
+            <DefaultRolloverStrategy max="20"/>
+        </RollingRandomAccessFile>
+    </Appenders>
+
+    <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
+    <Loggers>
+        <!--建立一个默认的root的logger-->
+        <Root level="debug">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingRandomAccessFile" />
+        </Root>
+        <logger name="org.springframework" level="info">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingRandomAccessFile" />
+        </logger>
+    </Loggers>
+</Configuration>
