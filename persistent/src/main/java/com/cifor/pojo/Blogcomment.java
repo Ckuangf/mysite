@@ -4,24 +4,19 @@ import java.io.Serializable;
 
 public class Blogcomment implements Serializable {
     private Integer id;
-    //也用作评论标识
+
     private String title;
 
     private String author;
-    //阅读数
+
     private Integer readnum;
-    //点赞数
+
     private Integer favornum;
-    //不赞同数
+
     private Integer loathingnum;
 
     private Long createtime;
 
-    //跟评ID(存放评论的json字符串：如下格式;
-    // {
-    //      supID:xxx;
-    //      subID:[xx,xx];
-    // }
     private String withcomment;
 
     private String commenttext;

@@ -73,7 +73,30 @@
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-core</artifactId>
         <version>${log4j.version}</version>
+
+        <!--本项目模块-->
       </dependency>
+      <dependency>
+          <groupId>com.cifor.site</groupId>
+          <artifactId>service</artifactId>
+          <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>com.cifor.site</groupId>
+        <artifactId>persistent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>com.cifor.site</groupId>
+        <artifactId>common</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>com.cifor.site</groupId>
+        <artifactId>utils</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
+
     </dependencies>
   </dependencyManagement>
 

@@ -1,6 +1,9 @@
 package com.cifor.mapper;
 
 import com.cifor.pojo.Blog;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 public interface BlogMapper {
     int deleteByPrimaryKey(Integer id);
@@ -16,4 +19,7 @@ public interface BlogMapper {
     int updateByPrimaryKeyWithBLOBs(Blog record);
 
     int updateByPrimaryKey(Blog record);
+
+    @Select("select * from Blog")
+    List<Blog> getAllBlog();
 }
