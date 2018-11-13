@@ -20,6 +20,6 @@ public interface BlogMapper {
 
     int updateByPrimaryKey(Blog record);
 
-    @Select("select * from Blog")
+    @Select("select * from blog")
     List<Blog> getAllBlog();
 }

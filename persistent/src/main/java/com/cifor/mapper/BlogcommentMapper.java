@@ -2,8 +2,6 @@ package com.cifor.mapper;
 
 import com.cifor.pojo.Blogcomment;
 
-import javax.persistence.Id;
-
 public interface BlogcommentMapper {
     int deleteByPrimaryKey(Integer id);
 

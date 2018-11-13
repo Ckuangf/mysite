@@ -6,9 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class HomePage {
+public class HomePageController {
 
-    private Logger logger = LoggerFactory.getLogger(HomePage.class);
+    private Logger logger = LoggerFactory.getLogger(HomePageController.class);
 
     @RequestMapping("/homePage")
     public String homePage(){

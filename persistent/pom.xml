@@ -131,7 +131,13 @@
 
         <resources>
             <resource>
-                <directory>src/main/com/cifor/mapper</directory>
+                <directory>src/main/java/com/cifor/mapper</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
                 <includes>
                     <include>**/*.*</include>
                 </includes>
