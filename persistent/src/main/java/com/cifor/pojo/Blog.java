@@ -4,21 +4,21 @@ import java.io.Serializable;
 
 public class Blog implements Serializable {
     private Integer id;
-
+    //也用作评论标识
     private String title;
 
     private String author;
-
+    //阅读数
     private Integer readnum;
-
+    //点赞数
     private Integer favornum;
-
+    //不赞同数
     private Integer loathingnum;
 
     private Long createtime;
 
     private Long lastmodefiedtime;
-
+    //存放json格式字符串，可以分出父类别，子类别等
     private String category;
 
     private String trait;

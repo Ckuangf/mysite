@@ -102,6 +102,10 @@
             <artifactId>service</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.cifor.site</groupId>
+            <artifactId>utils</artifactId>
+        </dependency>
     </dependencies>
 
     <!--将resource目录下的文件编译到classes文件夹下-->

@@ -1,31 +1,31 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cifor.mapper.BlogMapper">
-  <resultMap id="BaseResultMap" type="com.cifor.pojo.Blog">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="author" jdbcType="VARCHAR" property="author" />
-    <result column="readNum" jdbcType="INTEGER" property="readnum" />
-    <result column="favorNum" jdbcType="INTEGER" property="favornum" />
-    <result column="loathingNum" jdbcType="INTEGER" property="loathingnum" />
-    <result column="createTime" jdbcType="BIGINT" property="createtime" />
-    <result column="lastModefiedTime" jdbcType="BIGINT" property="lastmodefiedtime" />
-    <result column="category" jdbcType="VARCHAR" property="category" />
-    <result column="trait" jdbcType="VARCHAR" property="trait" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="ext" jdbcType="VARCHAR" property="ext" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cifor.mapper.BlogMapper" >
+  <resultMap id="BaseResultMap" type="com.cifor.pojo.Blog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="readNum" property="readnum" jdbcType="INTEGER" />
+    <result column="favorNum" property="favornum" jdbcType="INTEGER" />
+    <result column="loathingNum" property="loathingnum" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="BIGINT" />
+    <result column="lastModefiedTime" property="lastmodefiedtime" jdbcType="BIGINT" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
+    <result column="trait" property="trait" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="ext" property="ext" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cifor.pojo.Blog">
-    <result column="mainText" jdbcType="LONGVARCHAR" property="maintext" />
+  <resultMap id="ResultMapWithBLOBs" type="com.cifor.pojo.Blog" extends="BaseResultMap" >
+    <result column="mainText" property="maintext" jdbcType="LONGVARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, title, author, readNum, favorNum, loathingNum, createTime, lastModefiedTime, 
     category, trait, description, ext
   </sql>
-  <sql id="Blob_Column_List">
+  <sql id="Blob_Column_List" >
     mainText
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     ,
@@ -33,11 +33,18 @@
     from Blog
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <select id="getAllBlog" resultMap="ResultMapWithBLOBs" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Blog
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from Blog
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.cifor.pojo.Blog">
+  <insert id="insert" parameterType="com.cifor.pojo.Blog" >
     insert into Blog (id, title, author, 
       readNum, favorNum, loathingNum, 
       createTime, lastModefiedTime, category, 
@@ -49,134 +56,134 @@
       #{trait,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{ext,jdbcType=VARCHAR}, 
       #{maintext,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.cifor.pojo.Blog">
+  <insert id="insertSelective" parameterType="com.cifor.pojo.Blog" >
     insert into Blog
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="title != null">
+      <if test="title != null" >
         title,
       </if>
-      <if test="author != null">
+      <if test="author != null" >
         author,
       </if>
-      <if test="readnum != null">
+      <if test="readnum != null" >
         readNum,
       </if>
-      <if test="favornum != null">
+      <if test="favornum != null" >
         favorNum,
       </if>
-      <if test="loathingnum != null">
+      <if test="loathingnum != null" >
         loathingNum,
       </if>
-      <if test="createtime != null">
+      <if test="createtime != null" >
         createTime,
       </if>
-      <if test="lastmodefiedtime != null">
+      <if test="lastmodefiedtime != null" >
         lastModefiedTime,
       </if>
-      <if test="category != null">
+      <if test="category != null" >
         category,
       </if>
-      <if test="trait != null">
+      <if test="trait != null" >
         trait,
       </if>
-      <if test="description != null">
+      <if test="description != null" >
         description,
       </if>
-      <if test="ext != null">
+      <if test="ext != null" >
         ext,
       </if>
-      <if test="maintext != null">
+      <if test="maintext != null" >
         mainText,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="title != null">
+      <if test="title != null" >
         #{title,jdbcType=VARCHAR},
       </if>
-      <if test="author != null">
+      <if test="author != null" >
         #{author,jdbcType=VARCHAR},
       </if>
-      <if test="readnum != null">
+      <if test="readnum != null" >
         #{readnum,jdbcType=INTEGER},
       </if>
-      <if test="favornum != null">
+      <if test="favornum != null" >
         #{favornum,jdbcType=INTEGER},
       </if>
-      <if test="loathingnum != null">
+      <if test="loathingnum != null" >
         #{loathingnum,jdbcType=INTEGER},
       </if>
-      <if test="createtime != null">
+      <if test="createtime != null" >
         #{createtime,jdbcType=BIGINT},
       </if>
-      <if test="lastmodefiedtime != null">
+      <if test="lastmodefiedtime != null" >
         #{lastmodefiedtime,jdbcType=BIGINT},
       </if>
-      <if test="category != null">
+      <if test="category != null" >
         #{category,jdbcType=VARCHAR},
       </if>
-      <if test="trait != null">
+      <if test="trait != null" >
         #{trait,jdbcType=VARCHAR},
       </if>
-      <if test="description != null">
+      <if test="description != null" >
         #{description,jdbcType=VARCHAR},
       </if>
-      <if test="ext != null">
+      <if test="ext != null" >
         #{ext,jdbcType=VARCHAR},
       </if>
-      <if test="maintext != null">
+      <if test="maintext != null" >
         #{maintext,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cifor.pojo.Blog">
+  <update id="updateByPrimaryKeySelective" parameterType="com.cifor.pojo.Blog" >
     update Blog
-    <set>
-      <if test="title != null">
+    <set >
+      <if test="title != null" >
         title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="author != null">
+      <if test="author != null" >
         author = #{author,jdbcType=VARCHAR},
       </if>
-      <if test="readnum != null">
+      <if test="readnum != null" >
         readNum = #{readnum,jdbcType=INTEGER},
       </if>
-      <if test="favornum != null">
+      <if test="favornum != null" >
         favorNum = #{favornum,jdbcType=INTEGER},
       </if>
-      <if test="loathingnum != null">
+      <if test="loathingnum != null" >
         loathingNum = #{loathingnum,jdbcType=INTEGER},
       </if>
-      <if test="createtime != null">
+      <if test="createtime != null" >
         createTime = #{createtime,jdbcType=BIGINT},
       </if>
-      <if test="lastmodefiedtime != null">
+      <if test="lastmodefiedtime != null" >
         lastModefiedTime = #{lastmodefiedtime,jdbcType=BIGINT},
       </if>
-      <if test="category != null">
+      <if test="category != null" >
         category = #{category,jdbcType=VARCHAR},
       </if>
-      <if test="trait != null">
+      <if test="trait != null" >
         trait = #{trait,jdbcType=VARCHAR},
       </if>
-      <if test="description != null">
+      <if test="description != null" >
         description = #{description,jdbcType=VARCHAR},
       </if>
-      <if test="ext != null">
+      <if test="ext != null" >
         ext = #{ext,jdbcType=VARCHAR},
       </if>
-      <if test="maintext != null">
+      <if test="maintext != null" >
         mainText = #{maintext,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cifor.pojo.Blog">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cifor.pojo.Blog" >
     update Blog
     set title = #{title,jdbcType=VARCHAR},
       author = #{author,jdbcType=VARCHAR},
@@ -192,419 +199,7 @@
       mainText = #{maintext,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cifor.pojo.Blog">
-    update Blog
-    set title = #{title,jdbcType=VARCHAR},
-      author = #{author,jdbcType=VARCHAR},
-      readNum = #{readnum,jdbcType=INTEGER},
-      favorNum = #{favornum,jdbcType=INTEGER},
-      loathingNum = #{loathingnum,jdbcType=INTEGER},
-      createTime = #{createtime,jdbcType=BIGINT},
-      lastModefiedTime = #{lastmodefiedtime,jdbcType=BIGINT},
-      category = #{category,jdbcType=VARCHAR},
-      trait = #{trait,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      ext = #{ext,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="com.cifor.pojo.Blog">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="author" jdbcType="VARCHAR" property="author" />
-    <result column="readNum" jdbcType="INTEGER" property="readnum" />
-    <result column="favorNum" jdbcType="INTEGER" property="favornum" />
-    <result column="loathingNum" jdbcType="INTEGER" property="loathingnum" />
-    <result column="createTime" jdbcType="BIGINT" property="createtime" />
-    <result column="lastModefiedTime" jdbcType="BIGINT" property="lastmodefiedtime" />
-    <result column="category" jdbcType="VARCHAR" property="category" />
-    <result column="trait" jdbcType="VARCHAR" property="trait" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="ext" jdbcType="VARCHAR" property="ext" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cifor.pojo.Blog">
-    <result column="mainText" jdbcType="LONGVARCHAR" property="maintext" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, title, author, readNum, favorNum, loathingNum, createTime, lastModefiedTime, 
-    category, trait, description, ext
-  </sql>
-  <sql id="Blob_Column_List">
-    mainText
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from Blog
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from Blog
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.cifor.pojo.Blog">
-    insert into Blog (id, title, author, 
-      readNum, favorNum, loathingNum, 
-      createTime, lastModefiedTime, category, 
-      trait, description, ext, 
-      mainText)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
-      #{readnum,jdbcType=INTEGER}, #{favornum,jdbcType=INTEGER}, #{loathingnum,jdbcType=INTEGER}, 
-      #{createtime,jdbcType=BIGINT}, #{lastmodefiedtime,jdbcType=BIGINT}, #{category,jdbcType=VARCHAR}, 
-      #{trait,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{ext,jdbcType=VARCHAR}, 
-      #{maintext,jdbcType=LONGVARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.cifor.pojo.Blog">
-    insert into Blog
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="title != null">
-        title,
-      </if>
-      <if test="author != null">
-        author,
-      </if>
-      <if test="readnum != null">
-        readNum,
-      </if>
-      <if test="favornum != null">
-        favorNum,
-      </if>
-      <if test="loathingnum != null">
-        loathingNum,
-      </if>
-      <if test="createtime != null">
-        createTime,
-      </if>
-      <if test="lastmodefiedtime != null">
-        lastModefiedTime,
-      </if>
-      <if test="category != null">
-        category,
-      </if>
-      <if test="trait != null">
-        trait,
-      </if>
-      <if test="description != null">
-        description,
-      </if>
-      <if test="ext != null">
-        ext,
-      </if>
-      <if test="maintext != null">
-        mainText,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="author != null">
-        #{author,jdbcType=VARCHAR},
-      </if>
-      <if test="readnum != null">
-        #{readnum,jdbcType=INTEGER},
-      </if>
-      <if test="favornum != null">
-        #{favornum,jdbcType=INTEGER},
-      </if>
-      <if test="loathingnum != null">
-        #{loathingnum,jdbcType=INTEGER},
-      </if>
-      <if test="createtime != null">
-        #{createtime,jdbcType=BIGINT},
-      </if>
-      <if test="lastmodefiedtime != null">
-        #{lastmodefiedtime,jdbcType=BIGINT},
-      </if>
-      <if test="category != null">
-        #{category,jdbcType=VARCHAR},
-      </if>
-      <if test="trait != null">
-        #{trait,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="ext != null">
-        #{ext,jdbcType=VARCHAR},
-      </if>
-      <if test="maintext != null">
-        #{maintext,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cifor.pojo.Blog">
-    update Blog
-    <set>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="author != null">
-        author = #{author,jdbcType=VARCHAR},
-      </if>
-      <if test="readnum != null">
-        readNum = #{readnum,jdbcType=INTEGER},
-      </if>
-      <if test="favornum != null">
-        favorNum = #{favornum,jdbcType=INTEGER},
-      </if>
-      <if test="loathingnum != null">
-        loathingNum = #{loathingnum,jdbcType=INTEGER},
-      </if>
-      <if test="createtime != null">
-        createTime = #{createtime,jdbcType=BIGINT},
-      </if>
-      <if test="lastmodefiedtime != null">
-        lastModefiedTime = #{lastmodefiedtime,jdbcType=BIGINT},
-      </if>
-      <if test="category != null">
-        category = #{category,jdbcType=VARCHAR},
-      </if>
-      <if test="trait != null">
-        trait = #{trait,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        description = #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="ext != null">
-        ext = #{ext,jdbcType=VARCHAR},
-      </if>
-      <if test="maintext != null">
-        mainText = #{maintext,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cifor.pojo.Blog">
-    update Blog
-    set title = #{title,jdbcType=VARCHAR},
-      author = #{author,jdbcType=VARCHAR},
-      readNum = #{readnum,jdbcType=INTEGER},
-      favorNum = #{favornum,jdbcType=INTEGER},
-      loathingNum = #{loathingnum,jdbcType=INTEGER},
-      createTime = #{createtime,jdbcType=BIGINT},
-      lastModefiedTime = #{lastmodefiedtime,jdbcType=BIGINT},
-      category = #{category,jdbcType=VARCHAR},
-      trait = #{trait,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      ext = #{ext,jdbcType=VARCHAR},
-      mainText = #{maintext,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.cifor.pojo.Blog">
-    update Blog
-    set title = #{title,jdbcType=VARCHAR},
-      author = #{author,jdbcType=VARCHAR},
-      readNum = #{readnum,jdbcType=INTEGER},
-      favorNum = #{favornum,jdbcType=INTEGER},
-      loathingNum = #{loathingnum,jdbcType=INTEGER},
-      createTime = #{createtime,jdbcType=BIGINT},
-      lastModefiedTime = #{lastmodefiedtime,jdbcType=BIGINT},
-      category = #{category,jdbcType=VARCHAR},
-      trait = #{trait,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      ext = #{ext,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="com.cifor.pojo.Blog">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="author" jdbcType="VARCHAR" property="author" />
-    <result column="readNum" jdbcType="INTEGER" property="readnum" />
-    <result column="favorNum" jdbcType="INTEGER" property="favornum" />
-    <result column="loathingNum" jdbcType="INTEGER" property="loathingnum" />
-    <result column="createTime" jdbcType="BIGINT" property="createtime" />
-    <result column="lastModefiedTime" jdbcType="BIGINT" property="lastmodefiedtime" />
-    <result column="category" jdbcType="VARCHAR" property="category" />
-    <result column="trait" jdbcType="VARCHAR" property="trait" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="ext" jdbcType="VARCHAR" property="ext" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cifor.pojo.Blog">
-    <result column="mainText" jdbcType="LONGVARCHAR" property="maintext" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, title, author, readNum, favorNum, loathingNum, createTime, lastModefiedTime, 
-    category, trait, description, ext
-  </sql>
-  <sql id="Blob_Column_List">
-    mainText
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from Blog
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from Blog
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.cifor.pojo.Blog">
-    insert into Blog (id, title, author, 
-      readNum, favorNum, loathingNum, 
-      createTime, lastModefiedTime, category, 
-      trait, description, ext, 
-      mainText)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
-      #{readnum,jdbcType=INTEGER}, #{favornum,jdbcType=INTEGER}, #{loathingnum,jdbcType=INTEGER}, 
-      #{createtime,jdbcType=BIGINT}, #{lastmodefiedtime,jdbcType=BIGINT}, #{category,jdbcType=VARCHAR}, 
-      #{trait,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{ext,jdbcType=VARCHAR}, 
-      #{maintext,jdbcType=LONGVARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.cifor.pojo.Blog">
-    insert into Blog
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="title != null">
-        title,
-      </if>
-      <if test="author != null">
-        author,
-      </if>
-      <if test="readnum != null">
-        readNum,
-      </if>
-      <if test="favornum != null">
-        favorNum,
-      </if>
-      <if test="loathingnum != null">
-        loathingNum,
-      </if>
-      <if test="createtime != null">
-        createTime,
-      </if>
-      <if test="lastmodefiedtime != null">
-        lastModefiedTime,
-      </if>
-      <if test="category != null">
-        category,
-      </if>
-      <if test="trait != null">
-        trait,
-      </if>
-      <if test="description != null">
-        description,
-      </if>
-      <if test="ext != null">
-        ext,
-      </if>
-      <if test="maintext != null">
-        mainText,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="author != null">
-        #{author,jdbcType=VARCHAR},
-      </if>
-      <if test="readnum != null">
-        #{readnum,jdbcType=INTEGER},
-      </if>
-      <if test="favornum != null">
-        #{favornum,jdbcType=INTEGER},
-      </if>
-      <if test="loathingnum != null">
-        #{loathingnum,jdbcType=INTEGER},
-      </if>
-      <if test="createtime != null">
-        #{createtime,jdbcType=BIGINT},
-      </if>
-      <if test="lastmodefiedtime != null">
-        #{lastmodefiedtime,jdbcType=BIGINT},
-      </if>
-      <if test="category != null">
-        #{category,jdbcType=VARCHAR},
-      </if>
-      <if test="trait != null">
-        #{trait,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="ext != null">
-        #{ext,jdbcType=VARCHAR},
-      </if>
-      <if test="maintext != null">
-        #{maintext,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cifor.pojo.Blog">
-    update Blog
-    <set>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="author != null">
-        author = #{author,jdbcType=VARCHAR},
-      </if>
-      <if test="readnum != null">
-        readNum = #{readnum,jdbcType=INTEGER},
-      </if>
-      <if test="favornum != null">
-        favorNum = #{favornum,jdbcType=INTEGER},
-      </if>
-      <if test="loathingnum != null">
-        loathingNum = #{loathingnum,jdbcType=INTEGER},
-      </if>
-      <if test="createtime != null">
-        createTime = #{createtime,jdbcType=BIGINT},
-      </if>
-      <if test="lastmodefiedtime != null">
-        lastModefiedTime = #{lastmodefiedtime,jdbcType=BIGINT},
-      </if>
-      <if test="category != null">
-        category = #{category,jdbcType=VARCHAR},
-      </if>
-      <if test="trait != null">
-        trait = #{trait,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        description = #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="ext != null">
-        ext = #{ext,jdbcType=VARCHAR},
-      </if>
-      <if test="maintext != null">
-        mainText = #{maintext,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cifor.pojo.Blog">
-    update Blog
-    set title = #{title,jdbcType=VARCHAR},
-      author = #{author,jdbcType=VARCHAR},
-      readNum = #{readnum,jdbcType=INTEGER},
-      favorNum = #{favornum,jdbcType=INTEGER},
-      loathingNum = #{loathingnum,jdbcType=INTEGER},
-      createTime = #{createtime,jdbcType=BIGINT},
-      lastModefiedTime = #{lastmodefiedtime,jdbcType=BIGINT},
-      category = #{category,jdbcType=VARCHAR},
-      trait = #{trait,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      ext = #{ext,jdbcType=VARCHAR},
-      mainText = #{maintext,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.cifor.pojo.Blog">
+  <update id="updateByPrimaryKey" parameterType="com.cifor.pojo.Blog" >
     update Blog
     set title = #{title,jdbcType=VARCHAR},
       author = #{author,jdbcType=VARCHAR},

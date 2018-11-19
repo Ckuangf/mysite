@@ -18,28 +18,38 @@ public class BlogServiceImpl implements IBlogService {
 
     @Override
     public void addBlog(Blog blog) {
-        blogMapper.insert(blog);
+        blogMapper.insertSelective(blog);
     }
 
     @Override
     public void deleteBlogById(int id) {
-
+        int i = blogMapper.deleteByPrimaryKey(id);
     }
 
     @Override
-    public void updateBlogById(int id) {
+    public void updateBlogByIdSelective(Blog blog) {
+        blogMapper.updateByPrimaryKeySelective(blog);
+    }
 
+    @Override
+    public void updateBlogByIdWithBlobs(Blog blog) {
+        blogMapper.updateByPrimaryKeyWithBLOBs(blog);
+    }
+
+    @Override
+    public void updateBlogByIdWithoutMainText(Blog blog) {
+        blogMapper.updateByPrimaryKey(blog);
     }
 
     @Override
     public Blog getBlogById(int id) {
-        return null;
+        Blog blog = blogMapper.selectByPrimaryKey(id);
+        return blog;
     }
 
     @Override
     public List<Blog> getAllBlog() {
-        System.out.println("获取所有的博文");
         List<Blog> allBlog = blogMapper.getAllBlog();
-        return null;
+        return allBlog;
     }
 }
